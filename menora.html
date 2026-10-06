@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Menora | Saphreon Group of Companies</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:#fff;
+    height:100vh;
+    overflow:hidden;
+}
+
+.app{
+    width:100%;
+    max-width:520px;
+    height:100vh;
+    margin:auto;
+    background:#0b1728;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+}
+
+.app:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:url("assets/saphreon-logo.jpg");
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:260px;
+    opacity:.035;
+    pointer-events:none;
+}
+
+/* HEADER */
+
+.header{
+    height:78px;
+    min-height:78px;
+    background:#091525;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    display:flex;
+    align-items:center;
+    padding:10px 15px;
+    position:relative;
+    z-index:5;
+}
+
+.avatar{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #1c8cff;
+    margin-right:12px;
+}
+
+.header-info{
+    flex:1;
+}
+
+.header-info h1{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:3px;
+}
+
+.header-info p{
+    font-size:12px;
+    color:#aebccc;
+}
+
+.online{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    font-size:11px;
+    color:#55df8a;
+    margin-top:4px;
+}
+
+.online-dot{
+    width:7px;
+    height:7px;
+    background:#55df8a;
+    border-radius:50%;
+}
+
+/* CHAT */
+
+.chat{
+    flex:1;
+    overflow-y:auto;
+    padding:18px 14px 15px;
+    position:relative;
+    z-index:2;
+}
+
+.message-row{
+    display:flex;
+    margin-bottom:15px;
+    align-items:flex-end;
+}
+
+.message-row.user{
+    justify-content:flex-end;
+}
+
+.message-avatar{
+    width:30px;
+    height:30px;
+    object-fit:cover;
+    border-radius:50%;
+    margin-right:8px;
+}
+
+.message-content{
+    max-width:82%;
+}
+
+.message{
+    padding:11px 13px;
+    border-radius:15px;
+    font-size:14px;
+    line-height:1.5;
+    white-space:pre-line;
+}
+
+.bot-message{
+    background:#14253a;
+    border-bottom-left-radius:4px;
+}
+
+.user-message{
+    background:#1168c4;
+    border-bottom-right-radius:4px;
+}
+
+.timestamp{
+    font-size:9px;
+    color:#718399;
+    margin-top:4px;
+}
+
+.user .timestamp{
+    text-align:right;
+}
+
+/* TYPING */
+
+.typing{
+    display:none;
+    align-items:center;
+    margin:0 0 12px 38px;
+    position:relative;
+    z-index:4;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+    background:#8295aa;
+    border-radius:50%;
+    margin-right:4px;
+    animation:typing 1.2s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+    0%,60%,100%{
+        opacity:.25;
+        transform:translateY(0);
+    }
+    30%{
+        opacity:1;
+        transform:translateY(-3px);
+    }
+}
+
+/* QUICK */
+
+.quick-area{
+    padding:8px 12px 5px;
+    position:relative;
+    z-index:4;
+}
+
+.quick-title{
+    color:#718399;
+    font-size:11px;
+    margin:0 0 7px 3px;
+}
+
+.quick-buttons{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.quick-buttons::-webkit-scrollbar{
+    display:none;
+}
+
+.quick-btn{
+    flex:0 0 auto;
+    background:#112238;
+    border:1px solid rgba(77,154,220,.25);
+    color:#dcecff;
+    padding:9px 12px;
+    border-radius:18px;
+    font-size:12px;
+}
+
+/* INPUT */
+
+.input-area{
+    padding:10px 12px 14px;
+    background:#091525;
+    border-top:1px solid rgba(255,255,255,.07);
+    position:relative;
+    z-index:5;
+}
+
+.input-box{
+    display:flex;
+    align-items:center;
+    background:#111f31;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:25px;
+    padding:4px 5px 4px 14px;
+}
+
+.input-box input{
+    flex:1;
+    border:none;
+    outline:none;
+    background:transparent;
+    color:#fff;
+    font-size:14px;
+    min-width:0;
+}
+
+.input-box input::placeholder{
+    color:#718399;
+}
+
+.send-btn{
+    width:40px;
+    height:40px;
+    border:none;
+    border-radius:50%;
+    background:#1475d1;
+    color:#fff;
+    font-size:18px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <div class="header">
+
+        <img
+            src="2684/menora.jpg"
+            class="avatar"
+            alt="Menora"
+        >
+
+        <div class="header-info">
+
+            <h1>Menora</h1>
+
+            <p>AI Recruitment Assistant · Saphreon</p>
+
+            <div class="online">
+
+                <span class="online-dot"></span>
+
+                Online
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="chat"
+        id="chat"
+    ></div>
+
+
+    <div
+        class="typing"
+        id="typing"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+
+    <div class="quick-area">
+
+        <div class="quick-title">
+            Quick help
+        </div>
+
+        <div class="quick-buttons">
+
+            <button
+                class="quick-btn"
+                onclick="startRegistration()"
+            >
+                📝 Start Registration
+            </button>
+
+            <button
+                class="quick-btn"
+                onclick="aboutSaphreon()"
+            >
+                🏢 About Saphreon
+            </button>
+
+            <button
+                class="quick-btn"
+                onclick="recruitmentProcess()"
+            >
+                📋 Recruitment Process
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-area">
+
+        <div class="input-box">
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Message Menora..."
+                autocomplete="off"
+            >
+
+            <button
+                class="send-btn"
+                onclick="sendMessage()"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   CANDIDATE DATA
+========================================== */
+
+const candidate = {
+
+    name:"",
+    passportNumber:"",
+    dob:"",
+    place:"",
+    whatsapp:"",
+    category:"",
+    position:"",
+    experience:"",
+    jobDetails:""
+
+};
+
+
+/* ==========================================
+   CONVERSATION STATE
+========================================== */
+
+let state = "NAME";
+
+
+/* ==========================================
+   ELEMENTS
+========================================== */
+
+const chat = document.getElementById("chat");
+
+const input = document.getElementById("messageInput");
+
+const typing = document.getElementById("typing");
+
+
+/* ==========================================
+   DATE + TIME
+========================================== */
+
+function currentDateTime(){
+
+    const now = new Date();
+
+    const date = now.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+    const time = now.toLocaleTimeString(
+        "en-GB",
+        {
+            hour:"2-digit",
+            minute:"2-digit",
+            second:"2-digit"
+        }
+    );
+
+    return date + " · " + time;
+
+}
+
+
+/* ==========================================
+   SAFE TEXT
+========================================== */
+
+function safeText(text){
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* ==========================================
+   SCROLL
+========================================== */
+
+function scrollChat(){
+
+    setTimeout(function(){
+
+        chat.scrollTop = chat.scrollHeight;
+
+    },50);
+
+}
+
+
+/* ==========================================
+   MENORA MESSAGE
+========================================== */
+
+function addMenoraMessage(text){
+
+    const row = document.createElement("div");
+
+    row.className = "message-row";
+
+    row.innerHTML =
+
+        '<img ' +
+        'src="2684/menora.jpg" ' +
+        'class="message-avatar" ' +
+        'alt="Menora">' +
+
+        '<div class="message-content">' +
+
+        '<div class="message bot-message">' +
+        safeText(text) +
+        '</div>' +
+
+        '<div class="timestamp">' +
+        currentDateTime() +
+        '</div>' +
+
+        '</div>';
+
+    chat.appendChild(row);
+
+    scrollChat();
+
+}
+
+
+/* ==========================================
+   USER MESSAGE
+========================================== */
+
+function addUserMessage(text){
+
+    const row = document.createElement("div");
+
+    row.className = "message-row user";
+
+    row.innerHTML =
+
+        '<div class="message-content">' +
+
+        '<div class="message user-message">' +
+        safeText(text) +
+        '</div>' +
+
+        '<div class="timestamp">' +
+        currentDateTime() +
+        '</div>' +
+
+        '</div>';
+
+    chat.appendChild(row);
+
+    scrollChat();
+
+}
+
+
+/* ==========================================
+   TYPING
+========================================== */
+
+function showTyping(){
+
+    typing.style.display = "flex";
+
+}
+
+
+function hideTyping(){
+
+    typing.style.display = "none";
+
+}
+
+
+/* ==========================================
+   SEND MESSAGE
+========================================== */
+
+function sendMessage(){
+
+    const text = input.value.trim();
+
+    if(text === ""){
+
+        return;
+
+    }
+
+    addUserMessage(text);
+
+    input.value = "";
+
+    showTyping();
+
+    setTimeout(function(){
+
+        hideTyping();
+
+        const reply = getReply(text);
+
+        addMenoraMessage(reply);
+
+    },600);
+
+}
+
+
+/* ==========================================
+   ENTER
+========================================== */
+
+input.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* ==========================================
+   MAIN REPLY ENGINE
+========================================== */
+
+function getReply(message){
+
+    const text = message.trim();
+
+    const lower = text.toLowerCase();
+
+
+    /* NAME */
+
+    if(state === "NAME"){
+
+        candidate.name = text;
+
+        state = "PASSPORT";
+
+        return (
+            "Nice to meet you, " +
+            candidate.name +
+            " 😊\n\n" +
+
+            "Next, please provide your passport number.\n\n" +
+
+            "If you don't have a passport, simply type: No"
+        );
+
+    }
+
+
+    /* PASSPORT */
+
+    if(state === "PASSPORT"){
+
+        candidate.passportNumber = text;
+
+        state = "DOB";
+
+        return (
+            "Thank you 👍\n\n" +
+
+            "What is your date of birth?\n\n" +
+
+            "Please use DD/MM/YYYY format."
+        );
+
+    }
+
+
+    /* DOB */
+
+    if(state === "DOB"){
+
+        candidate.dob = text;
+
+        state = "PLACE";
+
+        return (
+            "Got it 😊\n\n" +
+
+            "What is your place / current location?"
+        );
+
+    }
+
+
+    /* PLACE */
+
+    if(state === "PLACE"){
+
+        candidate.place = text;
+
+        state = "WHATSAPP";
+
+        return (
+            "Thank you 👍\n\n" +
+
+            "Please provide your WhatsApp number with country code.\n\n" +
+
+            "Example: +91 9876543210"
+        );
+
+    }
+
+
+    /* WHATSAPP */
+
+    if(state === "WHATSAPP"){
+
+        candidate.whatsapp = text;
+
+        state = "CATEGORY";
+
+        return (
+            "Perfect 😊\n\n" +
+
+            "Your basic personal details are complete.\n\n" +
+
+            "Now let's discuss the job you're looking for.\n\n" +
+
+            "Please choose a category:\n\n" +
+
+            "🔧 Technical\n" +
+
+            "👷 Unskilled"
+        );
+
+    }
+
+
+    /* CATEGORY */
+
+    if(state === "CATEGORY"){
+
+        if(
+            lower.includes("technical") ||
+            lower.includes("welding") ||
+            lower.includes("welder") ||
+            lower.includes("electrician") ||
+            lower.includes("mechanic") ||
+            lower.includes("technician") ||
+            lower.includes("fabricator") ||
+            lower.includes("fitter") ||
+            lower.includes("plumber")
+        ){
+
+            candidate.category = "Technical";
+
+            state = "POSITION";
+
+            return (
+                "Technical category selected 👍\n\n" +
+
+                "What is your preferred technical position?\n\n" +
+
+                "For example:\n" +
+
+                "• Welder\n" +
+                "• Electrician\n" +
+                "• Mechanic\n" +
+                "• Fabricator\n" +
+                "• Fitter\n" +
+                "• Technician"
+            );
+
+        }
+
+
+        if(
+            lower.includes("unskilled") ||
+            lower.includes("helper") ||
+            lower.includes("general worker") ||
+            lower.includes("labour") ||
+            lower.includes("labor")
+        ){
+
+            candidate.category = "Unskilled";
+
+            state = "POSITION";
+
+            return (
+                "Unskilled category selected 👍\n\n" +
+
+                "What type of work are you looking for?\n\n" +
+
+                "For example:\n" +
+
+                "• General Worker\n" +
+                "• Helper\n" +
+                "• Loading / Packing\n" +
+                "• Other unskilled work"
+            );
+
+        }
+
+
+        return (
+            "Please choose one of these two categories:\n\n" +
+
+            "🔧 Technical\n" +
+
+            "👷 Unskilled"
+        );
+
+    }
+
+
+    /* POSITION */
+
+    if(state === "POSITION"){
+
+        candidate.position = text;
+
+        state = "EXPERIENCE";
+
+        return (
+            "Got it 😊\n\n" +
+
+            "Preferred position noted:\n" +
+
+            candidate.position +
+
+            "\n\nHow many years of experience do you have?"
+        );
+
+    }
+
+
+    /* EXPERIENCE */
+
+    if(state === "EXPERIENCE"){
+
+        candidate.experience = text;
+
+        state = "JOB_DETAILS";
+
+        return (
+            "Thank you 👍\n\n" +
+
+            "Now tell me more about the work you're looking for.\n\n" +
+
+            "You can mention your skills, previous work, preferred type of work, or any other important requirement."
+        );
+
+    }
+
+
+    /* JOB DETAILS */
+
+    if(state === "JOB_DETAILS"){
+
+        candidate.jobDetails = text;
+
+        state = "COMPLETE";
+
+        return finalProfile();
+
+    }
+
+
+    /* COMPLETE */
+
+    if(state === "COMPLETE"){
+
+        return (
+            "Your initial recruitment enquiry is already complete 😊\n\n" +
+
+            "If you need to correct any information, tell me which detail needs to be changed."
+        );
+
+    }
+
+
+    return "Let's continue your recruitment enquiry step by step 😊";
+
+}
+
+
+/* ==========================================
+   FINAL PROFILE
+========================================== */
+
+function finalProfile(){
+
+    return (
+        "Thank you, " +
+        candidate.name +
+        " 😊\n\n" +
+
+        "Your initial recruitment enquiry is complete.\n\n" +
+
+        "━━━━━━━━━━━━━━\n" +
+
+        "PERSONAL DETAILS\n\n" +
+
+        "Name: " +
+        candidate.name +
+
+        "\n\nPassport Number: " +
+        candidate.passportNumber +
+
+        "\n\nDate of Birth: " +
+        candidate.dob +
+
+        "\n\nPlace: " +
+        candidate.place +
+
+        "\n\nWhatsApp: " +
+        candidate.whatsapp +
+
+        "\n\n━━━━━━━━━━━━━━\n" +
+
+        "JOB DETAILS\n\n" +
+
+        "Category: " +
+        candidate.category +
+
+        "\n\nPosition: " +
+        candidate.position +
+
+        "\n\nExperience: " +
+        candidate.experience +
+
+        "\n\nAdditional Details: " +
+        candidate.jobDetails +
+
+        "\n\n━━━━━━━━━━━━━━\n" +
+
+        "The information has been collected for this recruitment enquiry.\n\n" +
+
+        "The Saphreon recruitment team must review the profile and confirm any suitable current opportunity and the next recruitment step.\n\n" +
+
+        "I will not promise an unconfirmed vacancy.\n\n" +
+
+        "Thank you for choosing Saphreon Group of Companies. 🤝\n\n" +
+
+        "— Menora\n" +
+        "Saphreon Recruitment Assistant"
+    );
+
+}
+
+
+/* ==========================================
+   QUICK BUTTONS
+========================================== */
+
+function startRegistration(){
+
+    addUserMessage("Start Registration");
+
+    state = "NAME";
+
+    showTyping();
+
+    setTimeout(function(){
+
+        hideTyping();
+
+        addMenoraMessage(
+            "Let's start your recruitment enquiry 😊\n\n" +
+            "May I know your full name?"
+        );
+
+    },600);
+
+}
+
+
+function aboutSaphreon(){
+
+    addUserMessage("About Saphreon");
+
+    showTyping();
+
+    setTimeout(function(){
+
+        hideTyping();
+
+        addMenoraMessage(
+            "Saphreon Group of Companies has a recruitment wing that assists candidates through the recruitment process.\n\n" +
+            "I can collect your initial profile details and guide you through the recruitment enquiry.\n\n" +
+            "Specific job availability must be confirmed by the Saphreon recruitment team."
+        );
+
+    },600);
+
+}
+
+
+function recruitmentProcess(){
+
+    addUserMessage("Recruitment Process");
+
+    showTyping();
+
+    setTimeout(function(){
+
+        hideTyping();
+
+        addMenoraMessage(
+            "The recruitment enquiry starts with your basic personal details.\n\n" +
+            "First I'll collect:\n\n" +
+            "👤 Name\n" +
+            "🛂 Passport Number\n" +
+            "🎂 Date of Birth\n" +
+            "📍 Place\n" +
+            "📱 WhatsApp Number\n\n" +
+            "Then we'll collect your job details:\n\n" +
+            "🔧 Technical / Unskilled\n" +
+            "💼 Position\n" +
+            "📚 Experience\n" +
+            "📋 Additional Job Details"
+        );
+
+    },600);
+
+}
+
+
+/* ==========================================
+   FIRST MESSAGE
+========================================== */
+
+setTimeout(function(){
+
+    addMenoraMessage(
+        "Hi! 👋 I'm Menora.\n\n" +
+        "I'm Saphreon Group of Companies' Recruitment Assistant.\n\n" +
+        "I'll first collect your basic personal details and then we'll discuss the job you're interested in.\n\n" +
+        "May I know your full name? 😊"
+    );
+
+},400);
+
+</script>
+
+</body>
+
+</html>
